@@ -18,7 +18,7 @@ class DetailsPage extends StatefulWidget {
 
 class _DetailsPageState extends State<DetailsPage> {
 
-  int _onSelectedValue = 0;
+   int _selectedIndex = 0;
 
    List<Widget> _pages = [
      Favorite(),
@@ -44,7 +44,11 @@ class _DetailsPageState extends State<DetailsPage> {
           builder: (BuildContext context, BoxConstraints constraints) {
             return navRailScroll(constraints,context);
           }),
-          Expanded(child: _pages[_onSelectedValue]),
+          Expanded(
+              child: Navigator(
+                  onGenerateRoute: (settings) => MaterialPageRoute(
+                      builder: (context) => _pages[_selectedIndex]),
+              )),
         ],
       )
     );
@@ -59,7 +63,7 @@ class _DetailsPageState extends State<DetailsPage> {
             minWidth: 52,
             onDestinationSelected: (int value) {
               setState(() {
-                _onSelectedValue = value;
+                _selectedIndex = value;
               });
             },
             groupAlignment: 0.5,
@@ -67,7 +71,7 @@ class _DetailsPageState extends State<DetailsPage> {
             selectedLabelTextStyle: const TextStyle(color: Colors.white,fontSize: 24,fontWeight: FontWeight.bold),
             unselectedLabelTextStyle: const TextStyle(color: Colors.white70,fontSize: 16,fontWeight: FontWeight.bold),
             backgroundColor: const Color(0xff2A5270),
-            selectedIndex: _onSelectedValue,
+            selectedIndex: _selectedIndex,
             leading: leadingMethod(),
             destinations: [
               const NavigationRailDestination(

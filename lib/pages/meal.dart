@@ -16,30 +16,18 @@ class Meal extends StatefulWidget {
 
 class _MealState extends State<Meal> {
 
-  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    final langProvider = Provider.of<ProviderLang>(context,listen: false);
-    return WillPopScope(
-      onWillPop: () {
-       langProvider.getItemSelected()?
-        setState(() {
-          langProvider.isItemSelected(false);
-        }): exit(0);
-        return Future.value(false);
-      },
-      child: Consumer<ProviderLang>(builder: (context,data,child) {
-        return SafeArea(
-          child: langProvider.getItemSelected()? InMeal(_selectedIndex) :
-          Scaffold(
-            body: LayoutBuilder(builder: (BuildContext context,BoxConstraints constraints) {
-              return mainUI(constraints);
-            }),
-          ),
-        );
-      }),
-    );
+    return Consumer<ProviderLang>(builder: (context,data,child) {
+      return SafeArea(
+        child: Scaffold(
+          body: LayoutBuilder(builder: (BuildContext context,BoxConstraints constraints) {
+            return mainUI(constraints);
+          }),
+        ),
+      );
+    });
   }
 
   Widget mainUI(BoxConstraints constraints) {
@@ -63,7 +51,7 @@ class _MealState extends State<Meal> {
         children: [
           Expanded(
             child: GridView.builder(
-              padding: EdgeInsets.only(top: 20,bottom: 16),
+              padding: const EdgeInsets.only(top: 20,bottom: 16),
                 itemCount: getMeals().length,
                 gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
                   mainAxisExtent: 316,

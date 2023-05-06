@@ -1,7 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:resturant_menu/ichkiPages/inMeal.dart';
 import 'package:resturant_menu/ovqatClass.dart';
+import 'package:resturant_menu/unitils/navigator_settings.dart';
 
 import '../railMenu/provider.dart';
 
@@ -18,6 +20,7 @@ class ProductItem extends StatefulWidget {
 class _ProductItemState extends State<ProductItem> {
   bool _mealSelect = false;
   int _selectedIndex = 0;
+//  var iconLast = Icon(Icons.favorite_border);
 
   @override
   Widget build(BuildContext context) {
@@ -94,11 +97,13 @@ class _ProductItemState extends State<ProductItem> {
                           var newList = List.of(favList);
                           if(!newList.contains(widget.index)) {
                             newList.add(widget.index);
+                            //iconLast = const Icon(Icons.favorite);
                           }
-                          langProvider.setFavList(newList);
+                            langProvider.setFavList(newList);
+                         //   iconLast = const Icon(Icons.favorite_border);
+
                         },
                             icon: const Icon(Icons.favorite_border)),
-                      //  Image.asset("assets/images/knopka.png",height: 50,width: 50,),
                         Container(
                           width: 120,height: 50,
                           child: ElevatedButton(
@@ -112,8 +117,7 @@ class _ProductItemState extends State<ProductItem> {
                                 )),
                             onPressed: () {
                               setState(() {
-                                langProvider.isItemSelected(true);
-                                _mealSelect = true;
+                                Navigator.of(context).push(createRoute(InMeal(widget.index)));
                               });
                             },
                             child:  Text("more".tr()),
@@ -130,9 +134,11 @@ class _ProductItemState extends State<ProductItem> {
           top: -20,
           right: 40,
           height: 120,width: 120,
-          child: Image.asset(widget.mealClass.imageUrl!),
+          child: Hero(
+            tag: 'productImage',
+              child: Image.asset(widget.mealClass.imageUrl!)),
         ),
       ],
-    );;
+    );
   }
 }

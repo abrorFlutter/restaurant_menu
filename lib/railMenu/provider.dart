@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
-import 'package:resturant_menu/railMenu/constt.dart';
+import 'package:resturant_menu/unitils/constt.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProviderLang extends ChangeNotifier{
@@ -18,10 +18,6 @@ class ProviderLang extends ChangeNotifier{
     return _selectedItemIndex;
   }
 
-  void isItemSelected(value) {
-    _isItemSelected = value;
-    notifyListeners();
-  }
 
   bool getItemSelected () {
     return _isItemSelected;
