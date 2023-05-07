@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ProviderLang extends ChangeNotifier{
 
-  bool _isItemSelected = false;
+  final bool _isItemSelected = false;
   int _selectedItemIndex = 0;
 
   void setItemIndex(value) {
@@ -38,11 +38,12 @@ class ProviderLang extends ChangeNotifier{
 
   setFavList(List<int> indexes) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    // String mealIndexes = jsonEncode(indexes);
-    prefs.setStringList(Constanta.Fav_Meals, indexes.map((e) => e.toString()).toList());
+    prefs.setStringList(Constanta.Fav_Meals,
+        indexes.map((e) => e.toString()).toList());
+    notifyListeners();
   }
 
-  Future<List<int>>getFavList() async {
+  Future<List<int>> getFavList() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String>? str = prefs.getStringList(Constanta.Fav_Meals);
     if(str != null) {

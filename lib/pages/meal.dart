@@ -60,7 +60,20 @@ class _MealState extends State<Meal> {
                   mainAxisSpacing: 40,
                 ),
                 itemBuilder: (BuildContext context, int index) {
-                  return ProductItem(getMeals()[index],index);
+                  return FutureBuilder(
+                    future: getFavorites(),
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if(snapshot.hasData) {
+                        if(snapshot.data.contains(index)) {
+                          return ProductItem(getMeals()[index],index,isFavorite: true);
+                        }else{
+                          return ProductItem(getMeals()[index],index,isFavorite: false);
+                        }
+                      }else{
+                        return const Center(child: CircularProgressIndicator());
+                      }
+
+                  });
                 }
             ),
           ),
@@ -83,5 +96,10 @@ class _MealState extends State<Meal> {
       }
       default: return MealClass.mealsUZ;
     }
+  }
+  Future<List<int>> getFavorites() async {
+    final langProvider = Provider.of<ProviderLang>(context,listen: false);
+    return await langProvider.getFavList();
+
   }
 }

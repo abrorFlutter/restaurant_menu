@@ -13,24 +13,26 @@ class Favorite extends StatelessWidget {
 
     final mainProvider = Provider.of<ProviderLang>(context,listen: false);
 
-    return FutureBuilder(future: mainProvider.getFavList(),  builder: (BuildContext context,AsyncSnapshot snapshot) {
-      if(!snapshot.hasData) {
-        return const Center(child: CircularProgressIndicator());
-      }else{
-        return GridView.builder(
-            padding: EdgeInsets.only(top: 20,bottom: 16),
-            itemCount: snapshot.data.length,
-            gridDelegate:  const SliverGridDelegateWithFixedCrossAxisCount(
-              mainAxisExtent: 316,
-              crossAxisCount: 1,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 40,
-            ),
-            itemBuilder: (BuildContext context, int index) {
-              return ProductItem(MealClass.mealsRU[snapshot.data[index]],index);
-            }
-        );
-      }
+    return Consumer<ProviderLang>(builder: (context,child,data) {
+      return FutureBuilder(future: mainProvider.getFavList(),  builder: (BuildContext context,AsyncSnapshot snapshot) {
+        if(!snapshot.hasData) {
+          return const Center(child: CircularProgressIndicator());
+        }else{
+          return GridView.builder(
+              padding: EdgeInsets.only(top: 20,bottom: 16),
+              itemCount: snapshot.data.length,
+              gridDelegate:  const SliverGridDelegateWithFixedCrossAxisCount(
+                mainAxisExtent: 316,
+                crossAxisCount: 1,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 40,
+              ),
+              itemBuilder: (BuildContext context, int index) {
+                return ProductItem(MealClass.mealsRU[snapshot.data[index]],snapshot.data[index],isFavorite: true);
+              }
+          );
+        }
+      });
     });
   }
 }

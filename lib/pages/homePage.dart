@@ -46,11 +46,11 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(height: 20,),
           BouncingWidget(
             onPressed: () {},
-            duration: const Duration(milliseconds: 100),
+            duration: const Duration(milliseconds: 10),
             scaleFactor: 1.5,
             child: AnimatedOpacity(
               opacity: _boolenn? 1.0 : 0.0,
-              duration: const Duration(seconds: 1),
+              duration: const Duration(),
               child: Container(
                 width: 200,height: 200,
                 color: Colors.blue,
